@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gui extends JFrame{
-    private JPanel panneauPrincipal, panneauTodos;
+    private JPanel panneauPrincipal, panneauTodos, panneauModification;
     private JLabel lblDate, lblModification, lblErreur, lblListeVide, lblListePleine;
-    private JButton btnAjouter, btnTodos1, btnTodos2, btnTodos3, btnTodos4, btnTodos5;
+    private JButton btnAjouter, btnValider, btnModifier, btnSupprimer, btnRetour, btnTodos1, btnTodos2, btnTodos3, btnTodos4, btnTodos5;
     private JTextField txtTodo;
     private List<Todo> liste=null;
     private GridBagConstraints gbc = new GridBagConstraints();
@@ -47,6 +47,8 @@ public class Gui extends JFrame{
             gbc.gridy=1;
             panneauPrincipal.add(getTxtTodo(), gbc);
             gbc.gridy=2;
+            panneauPrincipal.add(getPanneauModification(),gbc);
+            getPanneauModification().setVisible(false);
             panneauPrincipal.add(getBtnAjouter(), gbc);
             gbc.gridy=3;
             panneauPrincipal.add(getPanneauTodos(),gbc);
@@ -67,7 +69,6 @@ public class Gui extends JFrame{
         if(panneauTodos==null){
             panneauTodos=new JPanel();
             panneauTodos.setLayout(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
             panneauTodos.setPreferredSize(new Dimension(400,220));
             this.gbc.insets= new Insets(5,5,5,5);
 
@@ -76,6 +77,64 @@ public class Gui extends JFrame{
 
 
         return panneauTodos;
+    }
+
+    public JPanel getPanneauModification(){
+        if(panneauModification==null){
+            panneauModification=new JPanel();
+            panneauModification.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets= new Insets(5,5,5,5);
+            gbc.gridx=2;
+            panneauModification.add(getBtnValider(), gbc);
+            gbc.gridx=0;
+            panneauModification.add(getBtnSupprimer(), gbc);
+            gbc.gridx=1;
+            panneauModification.add(getBtnModifier(), gbc);
+            gbc.gridy=1;
+            panneauModification.add(getBtnRetour(), gbc);
+
+        }
+        return panneauModification;
+    }
+
+    private JButton getBtnRetour() {
+        if(btnRetour==null){
+            btnRetour= new JButton("Retour");
+            btnRetour.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnAjouter.setVisible(true);
+                    panneauTodos.setVisible(true);
+                    lblDate.setVisible(true);
+                    lblModification.setVisible(false);
+                    txtTodo.setText(null);
+                    panneauModification.setVisible(false);
+                }
+            });
+        }
+        return btnRetour;
+    }
+
+    private JButton getBtnValider() {
+        if(btnValider==null){
+            btnValider= new JButton("Valider");
+        }
+        return btnValider;
+    }
+
+    private JButton getBtnModifier() {
+        if(btnModifier==null){
+            btnModifier= new JButton("Modifier");
+        }
+        return btnModifier;
+    }
+
+    private JButton getBtnSupprimer() {
+        if(btnSupprimer==null){
+            btnSupprimer= new JButton("Supprimer");
+        }
+        return btnSupprimer;
     }
 
     public List<Todo> getListe(){
@@ -114,6 +173,7 @@ public class Gui extends JFrame{
                     lblDate.setVisible(false);
                     lblModification.setVisible(true);
                     txtTodo.setText(btnTodos1.getText());
+                    panneauModification.setVisible(true);
                 }
             });
         }
