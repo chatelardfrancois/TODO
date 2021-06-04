@@ -19,6 +19,7 @@ public class Gui extends JFrame{
     private JTextField txtTodo;
     private List<Todo> liste=null;
     private GridBagConstraints gbc = new GridBagConstraints();
+    private Todo todoAAfficher;
 
     public Gui()  {
         this.setTitle("Mes 5 choses à faire");
@@ -119,6 +120,17 @@ public class Gui extends JFrame{
     private JButton getBtnValider() {
         if(btnValider==null){
             btnValider= new JButton("Valider");
+            btnValider.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int input = JOptionPane.showConfirmDialog(null,
+                            "Vous êtes sur le point de valider la tâche, êtes vous sûr de l'avoir terminée ?", "Honnetement...", JOptionPane.OK_CANCEL_OPTION);
+                    if(input==0){
+
+                    }
+                }
+            });
+
         }
         return btnValider;
     }
@@ -179,6 +191,7 @@ public class Gui extends JFrame{
                     lblModification.setVisible(true);
                     txtTodo.setText(getListe().get(0).getTexte());
                     panneauModification.setVisible(true);
+                    todoAAfficher= getListe().get(0);
                 }
             });
         }
