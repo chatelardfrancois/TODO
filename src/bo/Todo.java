@@ -17,7 +17,12 @@ public class Todo {
                 '}';
     }
 
-
+    public Todo(int id, LocalDate date, String texte, LocalDate reussi) {
+        this.date = date;
+        this.id = id;
+        this.texte = texte;
+        this.reussi = reussi;
+    }
 
     public Todo(LocalDate date, String texte) {
         this.date = date;

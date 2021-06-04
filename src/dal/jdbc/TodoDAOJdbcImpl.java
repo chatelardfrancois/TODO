@@ -37,7 +37,7 @@ public class TodoDAOJdbcImpl implements TodoDAO {
             List<Todo> liste= new ArrayList<>();
             while (rs.next()){
 
-                liste.add(new Todo(rs.getInt("id"), rs.getDate("date").toLocalDate(), rs.getString("texte")));
+                liste.add(new Todo(rs.getInt("id"), rs.getDate("date").toLocalDate(), rs.getString("texte"), rs.getDate("reussi").toLocalDate()));
             }
             connection.close();
             return liste;
