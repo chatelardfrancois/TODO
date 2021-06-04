@@ -22,7 +22,7 @@ public class Gui extends JFrame{
     private Todo todoAAfficher;
 
     public Gui()  {
-        this.setTitle("Mes 5 choses à faire");
+        this.setTitle("Mes 5 TODO à faire avant 50 ans");
         this.setSize(400,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,8 +50,11 @@ public class Gui extends JFrame{
             gbc.gridy=2;
             panneauPrincipal.add(getPanneauModification(),gbc);
             getPanneauModification().setVisible(false);
-            panneauPrincipal.add(getBtnAjouter(), gbc);
+            panneauPrincipal.add(getLblListePleine(),gbc);
+            getLblListePleine().setVisible(false);
             gbc.gridy=3;
+            panneauPrincipal.add(getBtnAjouter(), gbc);
+            gbc.gridy=4;
             panneauPrincipal.add(getPanneauTodos(),gbc);
 
 
@@ -61,7 +64,7 @@ public class Gui extends JFrame{
 
     private JLabel getlblModification() {
         if(lblModification==null){
-            lblModification=new JLabel("Ecran de modification");
+            lblModification=new JLabel("Modification de la TODO");
         }
         return lblModification;
     }
@@ -168,14 +171,14 @@ public class Gui extends JFrame{
 
     public JLabel getLblListeVide(){
         if(lblListeVide==null){
-            lblListeVide= new JLabel("La liste des choses à faire est vide");
+            lblListeVide= new JLabel("La liste des TODO à faire est vide");
         }
         return lblListeVide;
     }
 
     public JLabel getLblListePleine(){
         if(lblListePleine==null){
-            lblListePleine= new JLabel("La liste des choses à faire est pleine");
+            lblListePleine= new JLabel("La liste des TODO à faire est pleine");
             lblListePleine.setForeground(new Color(0xFF0303));
         }
         return lblListePleine;
@@ -211,9 +214,24 @@ public class Gui extends JFrame{
             if(getListe().get(1).getReussi()==null){
                 btnTodos2= new JButton(String.format("%s - En cours", getListe().get(1).getTexte()));
             } else {
-                btnTodos2= new JButton(String.format("%s - Reussi le %S", getListe().get(1).getTexte(), getListe().get(2).getReussi().toString()));
+                btnTodos2= new JButton(String.format("%s - Reussi le %S", getListe().get(1).getTexte(), getListe().get(1).getReussi().toString()));
             }
+            btnTodos2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnAjouter.setVisible(false);
+                    panneauTodos.setVisible(false);
+                    lblDate.setVisible(false);
+                    lblModification.setVisible(true);
+                    todoAAfficher= getListe().get(1);
+                    txtTodo.setText(todoAAfficher.getTexte());
+                    panneauModification.setVisible(true);
+                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+
+                }
+            });
         }
+
         return btnTodos2;
     }
 
@@ -224,6 +242,20 @@ public class Gui extends JFrame{
             } else {
                 btnTodos3= new JButton(String.format("%s - Reussi le %S", getListe().get(2).getTexte(), getListe().get(2).getReussi().toString()));
             }
+            btnTodos3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnAjouter.setVisible(false);
+                    panneauTodos.setVisible(false);
+                    lblDate.setVisible(false);
+                    lblModification.setVisible(true);
+                    todoAAfficher= getListe().get(2);
+                    txtTodo.setText(todoAAfficher.getTexte());
+                    panneauModification.setVisible(true);
+                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+
+                }
+            });
         }
         return btnTodos3;
     }
@@ -235,6 +267,20 @@ public class Gui extends JFrame{
             } else {
                 btnTodos4= new JButton(String.format("%s - Reussi le %S", getListe().get(3).getTexte(), getListe().get(3).getReussi().toString()));
             }
+            btnTodos4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnAjouter.setVisible(false);
+                    panneauTodos.setVisible(false);
+                    lblDate.setVisible(false);
+                    lblModification.setVisible(true);
+                    todoAAfficher= getListe().get(3);
+                    txtTodo.setText(todoAAfficher.getTexte());
+                    panneauModification.setVisible(true);
+                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+
+                }
+            });
         }
         return btnTodos4;
     }
@@ -246,6 +292,20 @@ public class Gui extends JFrame{
             } else {
                 btnTodos5= new JButton(String.format("%s - Reussi le %S", getListe().get(4).getTexte(), getListe().get(4).getReussi().toString()));
             }
+            btnTodos5.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnAjouter.setVisible(false);
+                    panneauTodos.setVisible(false);
+                    lblDate.setVisible(false);
+                    lblModification.setVisible(true);
+                    todoAAfficher= getListe().get(4);
+                    txtTodo.setText(todoAAfficher.getTexte());
+                    panneauModification.setVisible(true);
+                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+
+                }
+            });
         }
         return btnTodos5;
     }
@@ -293,6 +353,7 @@ public class Gui extends JFrame{
         btnTodos3=null;
         btnTodos4=null;
         btnTodos5=null;
+        getLblListePleine().setVisible(false);
         this.gbc.gridy=1;
         switch (getListe().size()) {
             case 1 -> {
@@ -339,10 +400,8 @@ public class Gui extends JFrame{
                 panneauTodos.add(getBtnTodos5(), this.gbc);
                 panneauTodos.revalidate();
                 panneauTodos.repaint();
-                getTxtTodo().setEnabled(false);
                 getBtnAjouter().setEnabled(false);
-                this.gbc.gridy=0;
-                panneauTodos.add(getLblListePleine(), this.gbc);
+                getLblListePleine().setVisible(true);
             }
             default -> {
                 this.gbc.gridy=0;
