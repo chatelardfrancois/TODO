@@ -149,6 +149,7 @@ public class Gui extends JFrame{
         if(btnModifier==null){
             btnModifier= new JButton("Modifier");
         }
+        //TODO event bouton modifier et requete SQL Update
         return btnModifier;
     }
 
@@ -156,6 +157,7 @@ public class Gui extends JFrame{
         if(btnSupprimer==null){
             btnSupprimer= new JButton("Supprimer");
         }
+        //TODO event bouton supprimer et requete SQL Delete
         return btnSupprimer;
     }
 
