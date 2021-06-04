@@ -187,28 +187,44 @@ public class Gui extends JFrame{
 
     public JButton getBtnTodos2(){
         if(btnTodos2==null){
-            btnTodos2= new JButton(getListe().get(1).getTexte());
+            if(getListe().get(1).getReussi()==null){
+                btnTodos2= new JButton(String.format("%s - En cours", getListe().get(1).getTexte()));
+            } else {
+                btnTodos2= new JButton(String.format("%s - Reussi le %S", getListe().get(1).getTexte(), getListe().get(2).getReussi().toString()));
+            }
         }
         return btnTodos2;
     }
 
     public JButton getBtnTodos3(){
         if(btnTodos3==null){
-            btnTodos3= new JButton(getListe().get(2).getTexte());
+            if(getListe().get(2).getReussi()==null){
+                btnTodos3= new JButton(String.format("%s - En cours", getListe().get(2).getTexte()));
+            } else {
+                btnTodos3= new JButton(String.format("%s - Reussi le %S", getListe().get(2).getTexte(), getListe().get(2).getReussi().toString()));
+            }
         }
         return btnTodos3;
     }
 
     public JButton getBtnTodos4(){
         if(btnTodos4==null){
-            btnTodos4= new JButton(getListe().get(3).getTexte());
+            if(getListe().get(3).getReussi()==null){
+                btnTodos4= new JButton(String.format("%s - En cours", getListe().get(3).getTexte()));
+            } else {
+                btnTodos4= new JButton(String.format("%s - Reussi le %S", getListe().get(3).getTexte(), getListe().get(3).getReussi().toString()));
+            }
         }
         return btnTodos4;
     }
 
     public JButton getBtnTodos5(){
         if(btnTodos5==null){
-            btnTodos5= new JButton(getListe().get(4).getTexte());
+            if(getListe().get(4).getReussi()==null){
+                btnTodos5= new JButton(String.format("%s - En cours", getListe().get(4).getTexte()));
+            } else {
+                btnTodos5= new JButton(String.format("%s - Reussi le %S", getListe().get(4).getTexte(), getListe().get(4).getReussi().toString()));
+            }
         }
         return btnTodos5;
     }
