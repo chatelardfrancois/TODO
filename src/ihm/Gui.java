@@ -177,7 +177,7 @@ public class Gui extends JFrame{
                     panneauTodos.setVisible(false);
                     lblDate.setVisible(false);
                     lblModification.setVisible(true);
-                    txtTodo.setText(btnTodos1.getText());
+                    txtTodo.setText(getListe().get(0).getTexte());
                     panneauModification.setVisible(true);
                 }
             });
