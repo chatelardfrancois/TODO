@@ -173,7 +173,7 @@ public class Gui extends JFrame{
 
     public JLabel getLblListeVide(){
         if(lblListeVide==null){
-            lblListeVide= new JLabel("La liste des TODO à faire est vide");
+            lblListeVide= new JLabel("La liste des TODO est vide");
         }
         return lblListeVide;
     }
