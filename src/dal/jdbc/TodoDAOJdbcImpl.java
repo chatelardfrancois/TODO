@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TodoDAOJdbcImpl implements TodoDAO {
     Connection connection = null;
-    public final String INSERT = "INSERT INTO todo (date, texte, valide) values (?, ?, ?);";
+    public final String INSERT = "INSERT INTO todo (date, texte, reussi) values (?, ?, ?);";
     public final String SELECT_ALL = "SELECT * FROM todo;";
     @Override
     public void insert(Todo todo) throws DALException {
@@ -20,7 +20,7 @@ public class TodoDAOJdbcImpl implements TodoDAO {
             PreparedStatement stmt = connection.prepareStatement(INSERT);
             stmt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             stmt.setString(2, todo.getTexte());
-            stmt.setInt(3,0);
+            stmt.setDate(3, null);
             stmt.executeUpdate();
             connection.close();
         } catch (SQLException e) {
