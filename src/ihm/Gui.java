@@ -22,7 +22,7 @@ public class Gui extends JFrame{
     private Todo todoAAfficher;
 
     public Gui()  {
-        this.setTitle("Mes 5 TODO à faire avant 50 ans");
+        this.setTitle("Mes 5 TODO avant 50 ans");
         this.setSize(400,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
