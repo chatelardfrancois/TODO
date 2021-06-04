@@ -1,0 +1,5 @@
+/out/
+*.class
+/.idea/
+settings.properties
+tps.iml
