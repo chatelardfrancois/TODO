@@ -13,14 +13,15 @@ import java.util.List;
 
 public class TodoDAOJdbcImpl implements TodoDAO {
     Connection connection = null;
-    public final String INSERT = "INSERT INTO todo (date, texte) values (strftime('%s', CURRENT_DATE), ?);";
-    public final String SELECT_ALL = "SELECT id, DATETIME((date), 'unixepoch') AS date, texte FROM todo;";
+    public final String INSERT = "INSERT INTO todo (date, texte) values (?, ?);";
+    public final String SELECT_ALL = "SELECT * FROM todo;";
     @Override
     public void insert(Todo todo) throws DALException {
         try {
             connection = JdbcTools.getConnection();
             PreparedStatement stmt = connection.prepareStatement(INSERT);
-            stmt.setString(1, todo.getTexte());
+            stmt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            stmt.setString(2, todo.getTexte());
             stmt.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -37,7 +38,7 @@ public class TodoDAOJdbcImpl implements TodoDAO {
             List<Todo> liste= new ArrayList<>();
             while (rs.next()){
 
-                liste.add(new Todo(rs.getInt("id"), rs.getDate("Date").toLocalDate(), rs.getString("texte")));
+                liste.add(new Todo(rs.getInt("id"), rs.getDate("date").toLocalDate(), rs.getString("texte")));
             }
             connection.close();
             return liste;
