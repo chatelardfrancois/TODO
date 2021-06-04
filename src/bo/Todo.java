@@ -7,6 +7,15 @@ public class Todo {
     private int id;
     private String texte;
 
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "date=" + date +
+                ", id=" + id +
+                ", texte='" + texte + '\'' +
+                '}';
+    }
+
     public Todo(LocalDate date, String texte) {
         this.date = date;
         this.texte = texte;
@@ -14,6 +23,7 @@ public class Todo {
 
     public Todo(String texte) {
         this.texte = texte;
+        this.date = getDate();
     }
 
     public Todo(int id, LocalDate date, String texte) {

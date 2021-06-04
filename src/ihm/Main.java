@@ -1,15 +1,20 @@
 package ihm;
 
+import bll.BLLException;
+import bll.TodoManager;
+import dal.TodoDAO;
+import dal.jdbc.TodoDAOJdbcImpl;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:todo_db.sqlite";
-        try{
-            Connection connection = DriverManager.getConnection(url);
-        } catch (SQLException e){
+        TodoManager tm = TodoManager.getInstance();
+        try {
+            System.out.println(tm.getAllTodo());
+        } catch (BLLException e) {
             e.printStackTrace();
         }
     }
