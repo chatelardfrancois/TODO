@@ -33,10 +33,17 @@ public class TodoManager {
     }
 
     public void addTodo(String texte) throws BLLException {
-        //validerTodo(todo);
         try {
             Todo todo = new Todo(texte);
             daoTodo.insert(todo);
+        } catch (DALException e) {
+            throw new BLLException(e.getMessage());
+        }
+    }
+
+    public void updateTodoReussi(Todo todo) throws BLLException {
+        try {
+            daoTodo.updateReussi(todo);
         } catch (DALException e) {
             throw new BLLException(e.getMessage());
         }

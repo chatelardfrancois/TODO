@@ -126,7 +126,14 @@ public class Gui extends JFrame{
                     int input = JOptionPane.showConfirmDialog(null,
                             "Vous êtes sur le point de valider la tâche, êtes vous sûr de l'avoir terminée ?", "Honnetement...", JOptionPane.OK_CANCEL_OPTION);
                     if(input==0){
-
+                        TodoManager tm = TodoManager.getInstance();
+                        try {
+                            tm.updateTodoReussi(todoAAfficher);
+                            btnValider.setEnabled(false);
+                            afficherTodos();
+                        } catch (BLLException bllException) {
+                            bllException.printStackTrace();
+                        }
                     }
                 }
             });
@@ -181,7 +188,6 @@ public class Gui extends JFrame{
             } else {
                 btnTodos1= new JButton(String.format("%s - Reussi le %S", getListe().get(0).getTexte(), getListe().get(0).getReussi().toString()));
             }
-            btnTodos1= new JButton(String.format("%s - En cours", getListe().get(0).getTexte()));
             btnTodos1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -189,9 +195,11 @@ public class Gui extends JFrame{
                     panneauTodos.setVisible(false);
                     lblDate.setVisible(false);
                     lblModification.setVisible(true);
-                    txtTodo.setText(getListe().get(0).getTexte());
-                    panneauModification.setVisible(true);
                     todoAAfficher= getListe().get(0);
+                    txtTodo.setText(todoAAfficher.getTexte());
+                    panneauModification.setVisible(true);
+                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+
                 }
             });
         }
@@ -265,9 +273,9 @@ public class Gui extends JFrame{
                 TodoManager tm = TodoManager.getInstance();
                 try {
                     tm.addTodo(txtTodo.getText());
-                    panneauTodos.removeAll();
+
                     afficherTodos();
-                    panneauTodos.revalidate();
+
                     txtTodo.setText(null);
 
                 } catch (BLLException bllException) {
@@ -279,6 +287,12 @@ public class Gui extends JFrame{
     }
 
     public void afficherTodos(){
+        panneauTodos.removeAll();
+        btnTodos1=null;
+        btnTodos2=null;
+        btnTodos3=null;
+        btnTodos4=null;
+        btnTodos5=null;
         this.gbc.gridy=1;
         switch (getListe().size()) {
             case 1 -> {
