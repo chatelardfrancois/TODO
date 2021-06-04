@@ -6,6 +6,7 @@ public class Todo {
     private LocalDate date;
     private int id;
     private String texte;
+    private LocalDate reussi;
 
     @Override
     public String toString() {
@@ -15,6 +16,8 @@ public class Todo {
                 ", texte='" + texte + '\'' +
                 '}';
     }
+
+
 
     public Todo(LocalDate date, String texte) {
         this.date = date;
@@ -30,6 +33,14 @@ public class Todo {
         this.date = date;
         this.id = id;
         this.texte = texte;
+    }
+
+    public LocalDate getReussi() {
+        return reussi;
+    }
+
+    public void setReussi(LocalDate reussi) {
+        this.reussi = reussi;
     }
 
     public String getTexte() {

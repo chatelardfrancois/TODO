@@ -164,7 +164,12 @@ public class Gui extends JFrame{
 
     public JButton getBtnTodos1(){
         if(btnTodos1==null){
-            btnTodos1= new JButton(getListe().get(0).getTexte());
+            if(getListe().get(0).getReussi()==null){
+                btnTodos1= new JButton(String.format("%s - En cours", getListe().get(0).getTexte()));
+            } else {
+                btnTodos1= new JButton(String.format("%s - Reussi le %S", getListe().get(0).getTexte(), getListe().get(0).getReussi().toString()));
+            }
+            btnTodos1= new JButton(String.format("%s - En cours", getListe().get(0).getTexte()));
             btnTodos1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
