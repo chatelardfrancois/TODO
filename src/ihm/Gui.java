@@ -18,6 +18,8 @@ public class Gui extends JFrame{
     private final GridBagConstraints gbc = new GridBagConstraints();
     private Todo todoAAfficher;
 
+    //TODO Amelioratios graphiques et tests unitaires
+
     public Gui()  {
         this.setTitle("Mes 5 TODO avant 50 ans");
         this.setSize(400,500);
