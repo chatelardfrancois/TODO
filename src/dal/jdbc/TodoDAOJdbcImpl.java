@@ -14,6 +14,7 @@ public class TodoDAOJdbcImpl implements TodoDAO {
     public final String INSERT = "INSERT INTO todo (date, texte, reussi) values (?, ?, ?);";
     public final String SELECT_ALL = "SELECT * FROM todo;";
     public final String UPDATE_REUSSI = "UPDATE todo SET reussi=? WHERE id=?;";
+    public final String UPDATE_TODO = "UPDATE todo SET texte=?, reussi=? WHERE id=?";
 
     @Override
     public void insert(Todo todo) throws DALException {
@@ -59,6 +60,22 @@ public class TodoDAOJdbcImpl implements TodoDAO {
             connection.close();
         }catch (SQLException e) {
             throw  new DALException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateTodo(String texte, int id) throws DALException {
+        try {
+            connection = JdbcTools.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(UPDATE_TODO);
+            stmt.setString(1, texte);
+            stmt.setDate(2,null);
+            stmt.setInt(3, id);
+            stmt.executeUpdate();
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new DALException(e.getMessage());
         }
     }
 }
