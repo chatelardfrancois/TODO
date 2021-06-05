@@ -49,6 +49,14 @@ public class TodoManager {
         }
     }
 
+    public void updateTodo(String texte, int id) throws BLLException{
+        try {
+            daoTodo.updateTodo(texte, id);
+        } catch (DALException e) {
+            throw new BLLException(e.getMessage());
+        }
+    }
+
 
 
 
