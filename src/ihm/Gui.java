@@ -148,8 +148,20 @@ public class Gui extends JFrame{
     private JButton getBtnModifier() {
         if(btnModifier==null){
             btnModifier= new JButton("Modifier");
+            btnModifier.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    TodoManager tm = TodoManager.getInstance();
+                    try {
+                        tm.updateTodo(txtTodo.getText(), todoAAfficher.getId());
+                        afficherTodos();
+                        btnRetour.doClick();
+                    } catch (BLLException bllException) {
+                        bllException.printStackTrace();
+                    }
+                }
+            });
         }
-        //TODO event bouton modifier et requete SQL Update
         return btnModifier;
     }
 
