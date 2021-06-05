@@ -5,7 +5,6 @@ import dal.DALException;
 import dal.DAOFactory;
 import dal.TodoDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class TodoManager {
@@ -23,7 +22,7 @@ public class TodoManager {
     }
 
     public List<Todo> getAllTodo() throws BLLException {
-        List<Todo> articles = null;
+        List<Todo> articles;
         try {
             articles = daoTodo.selectAll();
         } catch (DALException e) {

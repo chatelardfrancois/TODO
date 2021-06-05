@@ -6,19 +6,16 @@ import bo.Todo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Gui extends JFrame{
     private JPanel panneauPrincipal, panneauTodos, panneauModification;
-    private JLabel lblDate, lblModification, lblErreur, lblListeVide, lblListePleine;
+    private JLabel lblDate, lblModification, lblListeVide, lblListePleine;
     private JButton btnAjouter, btnValider, btnModifier, btnSupprimer, btnRetour, btnTodos1, btnTodos2, btnTodos3, btnTodos4, btnTodos5;
     private JTextField txtTodo;
     private List<Todo> liste=null;
-    private GridBagConstraints gbc = new GridBagConstraints();
+    private final GridBagConstraints gbc = new GridBagConstraints();
     private Todo todoAAfficher;
 
     public Gui()  {
@@ -105,16 +102,13 @@ public class Gui extends JFrame{
     private JButton getBtnRetour() {
         if(btnRetour==null){
             btnRetour= new JButton("Retour");
-            btnRetour.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(true);
-                    panneauTodos.setVisible(true);
-                    lblDate.setVisible(true);
-                    lblModification.setVisible(false);
-                    txtTodo.setText(null);
-                    panneauModification.setVisible(false);
-                }
+            btnRetour.addActionListener(e -> {
+                btnAjouter.setVisible(true);
+                panneauTodos.setVisible(true);
+                lblDate.setVisible(true);
+                lblModification.setVisible(false);
+                txtTodo.setText(null);
+                panneauModification.setVisible(false);
             });
         }
         return btnRetour;
@@ -123,20 +117,17 @@ public class Gui extends JFrame{
     private JButton getBtnValider() {
         if(btnValider==null){
             btnValider= new JButton("Valider");
-            btnValider.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int input = JOptionPane.showConfirmDialog(null,
-                            "Vous êtes sur le point de valider la tâche, êtes vous sûr de l'avoir terminée ?", "Honnetement...", JOptionPane.OK_CANCEL_OPTION);
-                    if(input==0){
-                        TodoManager tm = TodoManager.getInstance();
-                        try {
-                            tm.updateTodoReussi(todoAAfficher);
-                            btnValider.setEnabled(false);
-                            afficherTodos();
-                        } catch (BLLException bllException) {
-                            bllException.printStackTrace();
-                        }
+            btnValider.addActionListener(e -> {
+                int input = JOptionPane.showConfirmDialog(null,
+                        "Vous êtes sur le point de valider la tâche, êtes vous sûr de l'avoir terminée ?", "Honnetement...", JOptionPane.OK_CANCEL_OPTION);
+                if(input==0){
+                    TodoManager tm = TodoManager.getInstance();
+                    try {
+                        tm.updateTodoReussi(todoAAfficher);
+                        btnValider.setEnabled(false);
+                        afficherTodos();
+                    } catch (BLLException bllException) {
+                        bllException.printStackTrace();
                     }
                 }
             });
@@ -148,17 +139,14 @@ public class Gui extends JFrame{
     private JButton getBtnModifier() {
         if(btnModifier==null){
             btnModifier= new JButton("Modifier");
-            btnModifier.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    TodoManager tm = TodoManager.getInstance();
-                    try {
-                        tm.updateTexteTodo(txtTodo.getText(), todoAAfficher);
-                        afficherTodos();
-                        btnRetour.doClick();
-                    } catch (BLLException bllException) {
-                        bllException.printStackTrace();
-                    }
+            btnModifier.addActionListener(e -> {
+                TodoManager tm = TodoManager.getInstance();
+                try {
+                    tm.updateTexteTodo(txtTodo.getText(), todoAAfficher);
+                    afficherTodos();
+                    btnRetour.doClick();
+                } catch (BLLException bllException) {
+                    bllException.printStackTrace();
                 }
             });
         }
@@ -168,18 +156,15 @@ public class Gui extends JFrame{
     private JButton getBtnSupprimer() {
         if(btnSupprimer==null){
             btnSupprimer= new JButton("Supprimer");
-            btnSupprimer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    TodoManager tm = TodoManager.getInstance();
-                    try {
-                        tm.deleteTodo(todoAAfficher);
-                        afficherTodos();
-                        btnRetour.doClick();
-                        getBtnAjouter().setEnabled(true);
-                    } catch (BLLException bllException) {
-                        bllException.printStackTrace();
-                    }
+            btnSupprimer.addActionListener(e -> {
+                TodoManager tm = TodoManager.getInstance();
+                try {
+                    tm.deleteTodo(todoAAfficher);
+                    afficherTodos();
+                    btnRetour.doClick();
+                    getBtnAjouter().setEnabled(true);
+                } catch (BLLException bllException) {
+                    bllException.printStackTrace();
                 }
             });
         }
@@ -219,19 +204,16 @@ public class Gui extends JFrame{
             } else {
                 btnTodos1= new JButton(String.format("%s - Reussi le %S", getListe().get(0).getTexte(), getListe().get(0).getReussi().toString()));
             }
-            btnTodos1.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(false);
-                    panneauTodos.setVisible(false);
-                    lblDate.setVisible(false);
-                    lblModification.setVisible(true);
-                    todoAAfficher= getListe().get(0);
-                    txtTodo.setText(todoAAfficher.getTexte());
-                    panneauModification.setVisible(true);
-                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+            btnTodos1.addActionListener(e -> {
+                btnAjouter.setVisible(false);
+                panneauTodos.setVisible(false);
+                lblDate.setVisible(false);
+                lblModification.setVisible(true);
+                todoAAfficher= getListe().get(0);
+                txtTodo.setText(todoAAfficher.getTexte());
+                panneauModification.setVisible(true);
+                btnValider.setEnabled(todoAAfficher.getReussi() == null);
 
-                }
             });
         }
         return btnTodos1;
@@ -244,19 +226,16 @@ public class Gui extends JFrame{
             } else {
                 btnTodos2= new JButton(String.format("%s - Reussi le %S", getListe().get(1).getTexte(), getListe().get(1).getReussi().toString()));
             }
-            btnTodos2.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(false);
-                    panneauTodos.setVisible(false);
-                    lblDate.setVisible(false);
-                    lblModification.setVisible(true);
-                    todoAAfficher= getListe().get(1);
-                    txtTodo.setText(todoAAfficher.getTexte());
-                    panneauModification.setVisible(true);
-                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+            btnTodos2.addActionListener(e -> {
+                btnAjouter.setVisible(false);
+                panneauTodos.setVisible(false);
+                lblDate.setVisible(false);
+                lblModification.setVisible(true);
+                todoAAfficher= getListe().get(1);
+                txtTodo.setText(todoAAfficher.getTexte());
+                panneauModification.setVisible(true);
+                btnValider.setEnabled(todoAAfficher.getReussi() == null);
 
-                }
             });
         }
 
@@ -270,19 +249,16 @@ public class Gui extends JFrame{
             } else {
                 btnTodos3= new JButton(String.format("%s - Reussi le %S", getListe().get(2).getTexte(), getListe().get(2).getReussi().toString()));
             }
-            btnTodos3.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(false);
-                    panneauTodos.setVisible(false);
-                    lblDate.setVisible(false);
-                    lblModification.setVisible(true);
-                    todoAAfficher= getListe().get(2);
-                    txtTodo.setText(todoAAfficher.getTexte());
-                    panneauModification.setVisible(true);
-                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+            btnTodos3.addActionListener(e -> {
+                btnAjouter.setVisible(false);
+                panneauTodos.setVisible(false);
+                lblDate.setVisible(false);
+                lblModification.setVisible(true);
+                todoAAfficher= getListe().get(2);
+                txtTodo.setText(todoAAfficher.getTexte());
+                panneauModification.setVisible(true);
+                btnValider.setEnabled(todoAAfficher.getReussi() == null);
 
-                }
             });
         }
         return btnTodos3;
@@ -295,19 +271,16 @@ public class Gui extends JFrame{
             } else {
                 btnTodos4= new JButton(String.format("%s - Reussi le %S", getListe().get(3).getTexte(), getListe().get(3).getReussi().toString()));
             }
-            btnTodos4.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(false);
-                    panneauTodos.setVisible(false);
-                    lblDate.setVisible(false);
-                    lblModification.setVisible(true);
-                    todoAAfficher= getListe().get(3);
-                    txtTodo.setText(todoAAfficher.getTexte());
-                    panneauModification.setVisible(true);
-                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+            btnTodos4.addActionListener(e -> {
+                btnAjouter.setVisible(false);
+                panneauTodos.setVisible(false);
+                lblDate.setVisible(false);
+                lblModification.setVisible(true);
+                todoAAfficher= getListe().get(3);
+                txtTodo.setText(todoAAfficher.getTexte());
+                panneauModification.setVisible(true);
+                btnValider.setEnabled(todoAAfficher.getReussi() == null);
 
-                }
             });
         }
         return btnTodos4;
@@ -320,19 +293,16 @@ public class Gui extends JFrame{
             } else {
                 btnTodos5= new JButton(String.format("%s - Reussi le %S", getListe().get(4).getTexte(), getListe().get(4).getReussi().toString()));
             }
-            btnTodos5.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnAjouter.setVisible(false);
-                    panneauTodos.setVisible(false);
-                    lblDate.setVisible(false);
-                    lblModification.setVisible(true);
-                    todoAAfficher= getListe().get(4);
-                    txtTodo.setText(todoAAfficher.getTexte());
-                    panneauModification.setVisible(true);
-                    btnValider.setEnabled(todoAAfficher.getReussi() == null);
+            btnTodos5.addActionListener(e -> {
+                btnAjouter.setVisible(false);
+                panneauTodos.setVisible(false);
+                lblDate.setVisible(false);
+                lblModification.setVisible(true);
+                todoAAfficher= getListe().get(4);
+                txtTodo.setText(todoAAfficher.getTexte());
+                panneauModification.setVisible(true);
+                btnValider.setEnabled(todoAAfficher.getReussi() == null);
 
-                }
             });
         }
         return btnTodos5;
