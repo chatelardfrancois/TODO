@@ -153,7 +153,7 @@ public class Gui extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     TodoManager tm = TodoManager.getInstance();
                     try {
-                        tm.updateTodo(txtTodo.getText(), todoAAfficher.getId());
+                        tm.updateTexteTodo(txtTodo.getText(), todoAAfficher);
                         afficherTodos();
                         btnRetour.doClick();
                     } catch (BLLException bllException) {
@@ -168,6 +168,20 @@ public class Gui extends JFrame{
     private JButton getBtnSupprimer() {
         if(btnSupprimer==null){
             btnSupprimer= new JButton("Supprimer");
+            btnSupprimer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    TodoManager tm = TodoManager.getInstance();
+                    try {
+                        tm.deleteTodo(todoAAfficher);
+                        afficherTodos();
+                        btnRetour.doClick();
+                        getBtnAjouter().setEnabled(true);
+                    } catch (BLLException bllException) {
+                        bllException.printStackTrace();
+                    }
+                }
+            });
         }
         //TODO event bouton supprimer et requete SQL Delete
         return btnSupprimer;
